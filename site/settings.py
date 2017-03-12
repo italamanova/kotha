@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'kotha.urls'
+ROOT_URLCONF = 'site.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'kotha.wsgi.application'
+WSGI_APPLICATION = 'site.wsgi.application'
 
 
 # Database
