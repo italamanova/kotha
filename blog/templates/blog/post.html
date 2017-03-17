@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block title %}All posts{% endblock %}
+
+{% block content %}
+
+  {% for post in posts %}
+
+    <article class="post">
+      <div class="post-thumb">
+        <a href="blog.html"><img src="{{ post.image.url }}" alt=""></a>
+
+        <a href="{% url 'blog:detail' post.id %}" class="post-thumb-overlay text-center">
+          <div class="text-uppercase text-center">View Post</div>
+        </a>
+      </div>
+      <div class="post-content">
+        <header class="entry-header text-center text-uppercase">
+          <h6><a href="index.html#"> {{ post.category }}</a></h6>
+
+          <h1 class="entry-title"><a
+              href="blog.html">{{ post.title }}</a></h1>
+
+
+        </header>
+        <div class="entry-content">
+          <p>
+            {{ post.text }}
+          </p>
+
+          <div class="btn-continue-reading text-center text-uppercase">
+            <a class="more-link" href=" {% url 'blog:detail' post.id %}" >Continue Reading</a>
+          </div>
+        </div>
+        <div class="social-share">
+                <span
+                    class="social-share-title pull-left text-capitalize">By <a
+                    href="{% url 'blog:about' %}">{{ post.author }}</a> On {{ post.published_date }}</span>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+{% endblock %}

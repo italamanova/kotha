@@ -1,0 +1,350 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Rubel Miah">
+
+  <!-- favicon icon -->
+  <link rel="shortcut icon"
+        href="http://demo.shapedtheme.com/kotha-pro-html/assets/images/">
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <!-- common css -->
+  <link rel="stylesheet" href='{% static 'css/bootstrap.min.css' %}'>
+  <link rel="stylesheet" href='{% static 'css/font-awesome.min.css' %}'>
+  <link rel="stylesheet" href='{% static 'css/animate.min.css' %}'>
+  <link rel="stylesheet" href='{% static 'css/owl.carousel.css' %}'>
+  <link rel="stylesheet" href='{% static 'css/owl.theme.css' %}'>
+  <link rel="stylesheet" href='{% static 'css/owl.transitions.css' %}'>
+  <link rel="stylesheet" href='{% static 'css/style.css' %}'>
+  <link rel="stylesheet" href='{% static 'css/responsive.css' %}'>
+
+  <!-- HTML5 shim and Respond.js IE9 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+{#    <script src="assets/js/html5shiv.js"></script>#}
+{#    <script src="assets/js/respond.js"></script>#}
+    <![endif]-->
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href='{% static 'images/favicon.png' %}'>
+
+</head>
+
+<body>
+
+<nav class="navbar main-menu navbar-default">
+  <div class="container">
+    <div class="menu-content">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img
+            src='{% static 'images/logo.png' %}' alt=""></a>
+      </div>
+
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+        <ul class="nav navbar-nav text-uppercase">
+          <li><a href="{% url 'blog:list' %}">HOME</a></li>
+          <li><a href="{% url 'blog:about' %}">ABOUT ME </a></li>
+{#          <li><a href="{% url 'blog:contact' %}">CONTACT</a></li>#}
+        </ul>
+        {#        <div class="i_con">#}
+        {#          <a href="index.html#"><i class="active fa fa-twitter"></i></a>#}
+        {#          <a href="index.html#"><i class="fa fa-facebook"></i></a>#}
+        {#          <a href="index.html#"><i class="fa fa-linkedin"></i></a>#}
+        {#          <a href="index.html#"><i class="fa fa-google-plus"></i></a>#}
+        {#          <a href="index.html#"><i class="fa fa-instagram"></i></a>#}
+        {#          <a href="index.html#"><i class="fa fa-heart"></i></a>#}
+        {##}
+        {#          <div class="top-search">#}
+        {#            <a href="index.html#"><i class="fa fa-search"></i></a>#}
+        {#          </div>#}
+        {#        </div>#}
+
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+  </div>
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+
+<div class="main-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+
+      <div class="col-md-4" data-sticky_column>
+        <div class="primary-sidebar">
+          <aside class="widget about-me-widget">
+            <div class="about-me-img">
+
+              <div class="about-me-content text-center">
+                {#                <img src="{% static "images/me.png" %}" alt="" class="img-me">#}
+
+                <img src="{{ owner.photo.url }}" alt="" class="img-me">
+
+                <h3 class="text-uppercase">{{ owner.name }}</h3>
+
+                <p>{{ owner.about_short }}</p>
+              </div>
+            </div>
+          </aside>
+          {#          <aside class="widget news-letter">#}
+          {#            <h3 class="widget-title text-uppercase text-center">Get#}
+          {#              Newsletter</h3>#}
+          {##}
+          {#            <form action="index.html#">#}
+          {#              <input type="email" placeholder="Your email address">#}
+          {#              <input type="submit" value="Subscribe Now"#}
+          {#                     class="text-uppercase text-center btn btn-subscribe">#}
+          {#            </form>#}
+          {##}
+          {#          </aside>#}
+          <aside class="widget">
+            <h3 class="widget-title text-uppercase text-center">Popular
+              Posts</h3>
+            {% for p_post in popular_posts %}
+              <div class="popular-post">
+                <a href="index.html#" class="popular-img"><img
+                    src="{{ p_post.image.url }}" alt="">
+
+                  <div class="p-overlay"></div>
+                </a>
+
+                <div class="p-content">
+                  <a href="index.html#" class="text-uppercase">{{ p_post.title }}</a>
+                  <span class="p-date">{{ p_post.published_date }}</span>
+
+                </div>
+              </div>
+            {% endfor %}
+          </aside>
+          <aside class="widget pos-padding">
+            <h3 class="widget-title text-uppercase text-center">Recent
+              Posts</h3>
+            {% for r_post in recent_posts %}
+              <div class="thumb-latest-posts">
+                <div class="media">
+                  <div class="media-left">
+                    <a href="index.html#" class="popular-img"><img
+                        src="{{ r_post.image.url }}" alt="">
+                      <div class="p-overlay"></div>
+                    </a>
+                  </div>
+                  <div class="p-content">
+                    <a href="index.html#"
+                       class="text-uppercase">{{ r_post.title }}</a>
+                    <span class="p-date">{{ r_post.published_date }}</span>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </aside>
+
+
+          <aside class="widget border pos-padding">
+            <h3 class="widget-title text-uppercase text-center">
+              Categories</h3>
+            <ul>
+              {% for category in category_list %}
+                {% if category.num_posts > 0 %}
+                  <li>
+                    <a href="{% url 'blog:list_by_category' category.id %}">{{ category.name }}</a>
+                    <span
+                        class="post-count pull-right"> ({{ category.num_posts }})</span>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </aside>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--footer start-->
+<div id="footer">
+  <footer class="footer-widget-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <aside class="footer-widget">
+            <div class="about-img"><img
+                src="{% static 'images/footer-logo.png' %}"
+                alt="Kotha"></div>
+            <div class="about-content">Lorem ipsum dolor sit amet, consetetur
+              sadipscing elitr, sed diam nonumy
+              eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+              sed
+              voluptua. At vero eos et
+              accusam et justo duo dlores et ea rebum magna text ar koto din.
+            </div>
+            <div class="address">
+              <h4 class="text-uppercase">contact Info</h4>
+
+              <p> 239/2 NK Street, DC, USA</p>
+
+              <p> Phone: +123 456 78900</p>
+
+              <p>theme@kotha.com</p>
+            </div>
+          </aside>
+        </div>
+
+        <div class="col-md-4">
+          <aside class="footer-widget">
+            <h3 class="widget-title text-uppercase">Testimonials</h3>
+
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!--Indicator-->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0"
+                    class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                  <div class="single-review">
+                    <div class="review-text">
+                      <p>Lorem ipsum dolor sit amet, conssadipscing elitr, sed
+                        diam nonumy eirmod
+                        tempvidunt ut labore et dolore magna aliquyam erat,sed
+                        diam voluptua. At
+                        vero eos et accusam justo duo dolores et ea
+                        rebum.gubergren no sea takimata
+                        magna aliquyam eratma</p>
+                    </div>
+                    <div class="author-id">
+                      <img src="{% static 'images/author.png' %}" alt="">
+
+                      <div class="author-text">
+                        <h4>Sophia</h4>
+
+                        <h4>CEO, ReadyTheme</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="single-review">
+                    <div class="review-text">
+                      <p>Lorem ipsum dolor sit amet, conssadipscing elitr, sed
+                        diam nonumy eirmod
+                        tempvidunt ut labore et dolore magna aliquyam erat,sed
+                        diam voluptua. At
+                        vero eos et accusam justo duo dolores et ea
+                        rebum.gubergren no sea takimata
+                        magna aliquyam eratma</p>
+                    </div>
+                    <div class="author-id">
+                      <img src="{% static 'images/author.png' %}" alt="">
+
+                      <div class="author-text">
+                        <h4>Sophia</h4>
+
+                        <h4>CEO, ReadyTheme</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="single-review">
+                    <div class="review-text">
+                      <p>Lorem ipsum dolor sit amet, conssadipscing elitr, sed
+                        diam nonumy eirmod
+                        tempvidunt ut labore et dolore magna aliquyam erat,sed
+                        diam voluptua. At
+                        vero eos et accusam justo duo dolores et ea
+                        rebum.gubergren no sea takimata
+                        magna aliquyam eratma</p>
+                    </div>
+                    <div class="author-id">
+                      <img src="{% static 'images/author.png' %}" alt="">
+
+                      <div class="author-text">
+                        <h4>Sophia</h4>
+
+                        <h4>CEO, ReadyTheme</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+        <div class="col-md-4">
+          <aside class="footer-widget">
+            <h3 class="widget-title text-uppercase">Custom Category Post</h3>
+
+
+            <div class="custom-post">
+              <div>
+                <a href="index.html"><img
+                    src="{% static 'images/footer-img.png' %}"
+                    alt=""></a>
+              </div>
+              <div>
+                <a href="index.html#" class="text-uppercase">Home is peaceful
+                  Place</a>
+                <span class="p-date">February 15, 2016</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-center">&copy; 2015 <a href="index.html">Kotha
+              PRO, </a> Designed with <i
+                class="fa fa-heart"></i> by <a
+                href="index.html#">ShapedTheme</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- js files -->
+  <script type="text/javascript"
+          src='{% static 'js/jquery-1.11.3.min.js' %}'></script>
+  <script type="text/javascript"
+          src='{% static 'js/bootstrap.min.js' %}'></script>
+  <script type="text/javascript"
+          src='{% static 'js/owl.carousel.min.js' %}'></script>
+  <script type="text/javascript"
+          src='{% static 'js/jquery.stickit.min.js' %}'></script>
+  <script type="text/javascript" src='{% static 'js/menu.js' %}'></script>
+  <script type="text/javascript" src='{% static 'js/scripts.js' %}'></script>
+</div>
+</body>
+
+</html>

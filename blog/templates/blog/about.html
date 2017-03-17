@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load i18n %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+  <div class="post-area">
+    <div class="about-me">
+      <div class="about-img text-center">
+        <img src="{{ user.photo.url }}" alt=""
+             class="img-circle">
+      </div>
+      <div class="about-me-text">
+        <p>{{ user.about_long }}</p>
+      </div>
+    </div>
+
+    <div class="our-skills">
+      <h3 class="bar-heading text-uppercase">My skills</h3>
+
+      <div class="bar">
+
+        <div class="progress">
+          <div class="progress-bar" role="progressbar"
+               aria-valuenow="70"
+               aria-valuemin="0"
+               aria-valuemax="100" style="width:80%">
+            Python 80%
+          </div>
+        </div>
+      </div>
+      <div class="bar">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar"
+               aria-valuenow="70"
+               aria-valuemin="0"
+               aria-valuemax="100" style="width:60%">
+            Android 60%
+          </div>
+        </div>
+
+      </div>
+      <div class="bar">
+
+        <div class="progress">
+          <div class="progress-bar" role="progressbar"
+               aria-valuenow="70"
+               aria-valuemin="0"
+               aria-valuemax="100" style="width:70%">
+            Other things 70%
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+{% endblock %}
+
