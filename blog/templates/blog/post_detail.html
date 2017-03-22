@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% load i18n %}
 
@@ -8,22 +9,21 @@
 {% block content %}
   <article class="post">
     <div class="post-thumb">
-      <a href="blog.html"><img src="{{ post.image.url }}"
+      <a href="{% url 'blog:detail' post.id %}"><img src="{{ post.image.url }}"
                                alt=""></a>
     </div>
     <div class="post-content">
       <header class="entry-header text-center text-uppercase">
-        <h6><a href="blog.html#"> {{ post.category }}</a></h6>
+        <h6><a href="{% url 'blog:list_by_category' post.category.id %}"> {{ post.category }}</a></h6>
 
-        <h1 class="entry-title"><a href="blog.html">{{ post.title }}</a></h1>
-
+        <h1 class="entry-title"><a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a></h1>
 
       </header>
       <div class="entry-content">
-        {{ post.text }}
+        {{ post.text|linebreaks }}
       </div>
       <div class="decoration">
-        <a href="blog.html#" class="btn btn-default">{{ post.category }}</a>
+        <a href="{% url 'blog:list_by_category' post.category.id %}" class="btn btn-default">{{ post.category }}</a>
       </div>
 
       <div class="social-share">
@@ -33,122 +33,102 @@
     </div>
   </article>
 
-  <div class="row"><!--blog next previous-->
-    <div class="col-md-6">
-      <div class="single-blog-box">
-        <a href="blog.html#">
-          <img src="{% static 'images/blog-next.jpg' %}" alt="">
-
-          <div class="overlay">
-
-            <div class="promo-text">
-              <p><i class=" pull-left fa fa-angle-left"></i></p>
-              <h5>Rubel is doing Cherry theme</h5>
-            </div>
-          </div>
-
-
-        </a>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="single-blog-box">
-        <a href="blog.html#">
-          <img src="{% static 'images/blog-next.jpg' %}" alt="">
-
-          <div class="overlay">
-            <div class="promo-text">
-              <p><i class=" pull-right fa fa-angle-right"></i></p>
-              <h5>{{ post.title }}</h5>
-
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div><!--blog next previous end-->
+{#  <div class="row"><!--blog next previous-->#}
+{#    <div class="col-md-6">#}
+{#      <div class="single-blog-box">#}
+{#        <a href="blog.html#">#}
+{#          <img src="{% static 'images/blog-next.jpg' %}" alt="">#}
+{##}
+{#          <div class="overlay">#}
+{##}
+{#            <div class="promo-text">#}
+{#              <p><i class=" pull-left fa fa-angle-left"></i></p>#}
+{#              <h5>Rubel is doing Cherry theme</h5>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{##}
+{#        </a>#}
+{#      </div>#}
+{#    </div>#}
+{#    <div class="col-md-6">#}
+{#      <div class="single-blog-box">#}
+{#        <a href="blog.html#">#}
+{#          <img src="{% static 'images/blog-next.jpg' %}" alt="">#}
+{##}
+{#          <div class="overlay">#}
+{#            <div class="promo-text">#}
+{#              <p><i class=" pull-right fa fa-angle-right"></i></p>#}
+{#              <h5>{{ post.title }}</h5>#}
+{##}
+{#            </div>#}
+{#          </div>#}
+{#        </a>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div><!--blog next previous end-->#}
   <div class="related-post-carousel"><!--related post carousel-->
     <div class="related-heading">
       <h4>You might also like</h4>
     </div>
     <div class="items">
-      {%  for p_post in popular_posts %}
-      <div class="single-item">
-        <a href="blog.html#">
-          <img src="{{ p_post.image.url }}" alt="">
+      {% for p_post in popular_posts %}
+        <div class="single-item">
+          <a href="blog.html#">
+            <img src="{{ p_post.image.url }}" alt="">
 
-          <p>{{ p_post.title }}</p>
-        </a>
-      </div>
+            <p>{{ p_post.title }}</p>
+          </a>
+        </div>
       {% endfor %}
-
-
 
 
     </div>
   </div><!--related post carousel-->
-  <div class="bottom-comment"><!--bottom comment-->
-    <h4>3 comments</h4>
 
-    <div class="comment-img">
-      <img class="img-circle" src="{% static 'images/comment-img.jpg' %}"
-           alt="">
+  {% for comment in comments %}
+    <div class="bottom-comment"><!--bottom comment-->
+      <div class="comment-img">
+        <img class="img-circle" src="{% static 'images/comment-img.jpg' %}"
+             alt="">
+      </div>
+
+      <div class="comment-text">
+        <h5>{{ comment.author }}</h5>
+
+        <p class="comment-date">
+          {{ comment.date_created }}
+        </p>
+
+
+        <p class="para">{{ comment.text }}</p>
+      </div>
     </div>
+  {% endfor %}
 
-    <div class="comment-text">
-      <h5>{{ owner.name }}</h5>
-
-      <p class="comment-date">
-        December, 02, 2015 at 5:57 PM
-      </p>
-
-
-      <p class="para">Lorem ipsum dolor sit amet, consetetur sadipscing
-        elitr, sed
-        diam nonumy
-        eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-        sed diam
-        voluptua. At vero eos et cusam et justo duo dolores et ea
-        rebum.</p>
-    </div>
-  </div>
   <!-- end bottom comment-->
-
 
   <div class="leave-comment"><!--leave comment-->
     <h4>Leave a reply</h4>
+    <form role="form" action="{% url 'blog:detail' post.id %}"
+          class="form-horizontal contact-form"
+          method="post">
+      {% for field in comment_form %}
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="">
+              {{ field|add_class:"input-lg" }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      {% csrf_token %}
+      <div class="clearfix">
 
+        <button type="submit" class="btn send-btn">Post comment</button>
 
-    <form class="form-horizontal contact-form" role="form"
-          method="post"
-          action="blog.html#">
-      <div class="form-group">
-        <div class="col-md-6">
-          <input type="text" class="form-control" id="name" name="name"
-                 placeholder="Name">
-        </div>
-        <div class="col-md-6">
-          <input type="email" class="form-control" id="email"
-                 name="email"
-                 placeholder="Email">
-        </div>
       </div>
-
-      <div class="form-group">
-        <div class="col-md-12">
-          <input type="text" class="form-control" id="subject"
-                 name="subject"
-                 placeholder="Website url">
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-md-12">
-										<textarea class="form-control" rows="6" name="message"
-                              placeholder="Write Massage"></textarea>
-        </div>
-      </div>
-      <a href="" class="btn send-btn">Post Comment</a>
     </form>
-  </div><!--end leave comment-->
+  </div>
 {% endblock %}
 

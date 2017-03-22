@@ -16,12 +16,12 @@ def category_list(request):
 
 
 def get_popular_posts(request):
-    popular_posts = Post.objects.all().order_by('views')
-    return {'popular_posts': popular_posts[:2]}
+    popular_posts = Post.objects.all().order_by('-views')
+    return {'popular_posts': popular_posts[:3]}
 
 
 def get_recent_posts(request):
     recent_posts = Post.objects.filter(published_date__lte=timezone.now(),
                                        published_date__gt=timezone.now() - datetime.timedelta(
-                                   days=5))
-    return {'recent_posts': recent_posts}
+                                   days=7)).order_by('-published_date')
+    return {'recent_posts': recent_posts[:3]}

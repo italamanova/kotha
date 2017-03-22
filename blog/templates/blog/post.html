@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block title %}All posts{% endblock %}
+{% block title %}Posts{% endblock %}
 
 {% block content %}
 
@@ -27,7 +27,7 @@
         </header>
         <div class="entry-content">
           <p>
-            {{ post.text }}
+            {{ post.get_short_text }}
           </p>
 
           <div class="btn-continue-reading text-center text-uppercase">

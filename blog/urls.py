@@ -9,7 +9,7 @@ app_name = 'blog'
 
 urlpatterns = [
     url(r'^$', views.PostListView.as_view(), name='list'),
-    url(r'^post/(?P<post_id>\d+)/$', views.PostDetailView.as_view(),
+    url(r'^post/(?P<post_id>\d+)/$', views.post_detail_view,#PostDetailView.as_view(),
         name='detail'),
     url(r'^category/(?P<category_id>\d+)/$', views.PostListByCategoryView.as_view(),
         name='list_by_category'),
