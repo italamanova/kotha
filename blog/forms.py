@@ -22,13 +22,13 @@ class CommentForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    image = forms.ImageField(label=_('Image'), required=False,
-                                    error_messages={
-                                        'invalid': _("Image files only")},
-                                    widget=forms.FileInput)
+    # image = forms.ImageField(label=_('Image'), required=False,
+    #                                 error_messages={
+    #                                     'invalid': _("Image files only")},
+    #                                 widget=forms.FileInput)
     class Meta:
         model = Post
-        fields = ['author', 'title', 'text', 'published_date', 'category', 'image']
+        fields = ['author', 'title', 'text', 'published_date', 'category', ]#'image']
         widgets = {
             'created_date': DateInput(),
             'published_date': DateInput(),
